@@ -15,7 +15,7 @@ export default function HomeScreen() {
   const [isRecording, setIsRecording] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
   const audioRecordingRef = useRef(new Audio.Recording());
-
+  
   const startRecording = async () => {
     setIsRecording(true);
     //record speech
