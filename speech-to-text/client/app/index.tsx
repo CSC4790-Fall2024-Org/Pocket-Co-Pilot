@@ -9,6 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useState, useRef } from 'react';
 import {Audio} from 'expo-av';
 import { recordSpeech } from '@/functions/recordSpeech';
+import { transcribeSpeech } from '@/functions/transcribeSpeech';
 
 export default function HomeScreen() {
   const [transcribedSpeech, setTranscribedSpeech] = useState("");
@@ -19,17 +20,22 @@ export default function HomeScreen() {
   const startRecording = async () => {
     setIsRecording(true);
     //record speech
-    await recordSpeech(
-      audioRecordingRef,
-      setIsRecording,
-      !!webAudioPermissionsRef.current
-    );
+    await recordSpeech(audioRecordingRef);
   };
   const stopRecording = async () => {
     setIsRecording(false);
     setIsTranscribing(true);
     //transcribe speech
-    setIsTranscribing(false);
+    try{
+      const speechTranscipt = await transcribeSpeech(audioRecordingRef);
+      setTranscribedSpeech(speechTranscipt || "");
+    }
+    catch(e){
+      console.error(e);
+    }
+    finally{
+      setIsTranscribing(false);
+    }
   };
   return (
     <SafeAreaView>
