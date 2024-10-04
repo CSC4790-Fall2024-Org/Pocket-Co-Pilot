@@ -10,6 +10,8 @@ import { useState, useRef } from 'react';
 import { Audio } from 'expo-av';
 import { recordSpeech } from '@/functions/recordSpeech';
 import { transcribeSpeech } from '@/functions/transcribeSpeech';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function HomeScreen() {
   const [transcribedSpeech, setTranscribedSpeech] = useState("");
@@ -38,6 +40,8 @@ export default function HomeScreen() {
     }
   };
   return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      
     <SafeAreaView>
       <ScrollView style={styles.mainScrollContainer}>
       <View style={styles.mainInnerContainer}>
@@ -75,6 +79,8 @@ export default function HomeScreen() {
       </View>
       </ScrollView>
     </SafeAreaView>
+
+    </GestureHandlerRootView>
   );
 }
 

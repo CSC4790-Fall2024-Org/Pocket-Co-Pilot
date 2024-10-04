@@ -1,4 +1,4 @@
-import React, { MutableRefObject } from "react";
+import { MutableRefObject } from "react";
 import { Audio } from "expo-av";
 import { Platform } from "react-native";
 

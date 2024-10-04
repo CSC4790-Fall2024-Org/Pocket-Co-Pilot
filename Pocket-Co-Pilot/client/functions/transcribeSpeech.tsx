@@ -46,6 +46,7 @@ export const transcribeSpeech = async (
         .then((res) => res.json())
         .catch((e) => console.error(e));
         const results = serverResponse?.results || [];
+        console.log(results);
         if (results){
           const transcript = results?.alternatives?.[0].transcript;
           if (!transcript){
