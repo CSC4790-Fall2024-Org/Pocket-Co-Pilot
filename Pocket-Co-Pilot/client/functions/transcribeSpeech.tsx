@@ -31,6 +31,7 @@ export const transcribeSpeech = async (
           sampleRateHertz: Platform.OS === "ios" ? 44100 : 16000,
           languageCode: "en-US",
         };
+        //need to configure so that app can access server
         const rootOrigin = 
         Platform.OS === 'android' 
         ? "10.0.2.2" : Device.isDevice 
