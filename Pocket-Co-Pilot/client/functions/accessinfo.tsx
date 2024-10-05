@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {useState, useEffect} from 'react';
 //import { View, Text, ActivityIndicator, FlatList } from 'react-native';
 
 interface ForecastPeriod {
@@ -6,6 +6,8 @@ interface ForecastPeriod {
   temperature: number;
   temperatureUnit: string;
   shortForecast: string;
+  DataisLoaded: false;
+
 }
 
 function App() {
