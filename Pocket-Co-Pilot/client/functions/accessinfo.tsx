@@ -1,56 +1,29 @@
-import { MutableRefObject } from "react";
-import { Audio } from "expo-av";
-import { Platform } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { View, Text, ActivityIndicator, FlatList } from 'react-native';
 
-export const recordSpeech = async (audioRecordingRef: MutableRefObject<Audio.Recording>) => {
-  try {
-    await Audio.setAudioModeAsync({
-      allowsRecordingIOS: true,
-      playsInSilentModeIOS: true,
-    });
-    const doneRecording = audioRecordingRef.current?._isDoneRecording;
-    if (doneRecording) {
-      audioRecordingRef.current = new Audio.Recording();
-    }
+const App = () => {
+  const [forecast, setForecast] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    const permissionResponse = await Audio.requestPermissionsAsync();
-    if (permissionResponse.status === "granted") {
-      
+  useEffect(() => {
+    const fetchWeatherData = () => {
+      fetch('https://api.weather.gov/points/39.7456,-97.0892')
+        .then((response) => response.json())
+        .then((data) => {
+          const forecastUrl = data.properties.forecast;
+          return fetch(forecastUrl);
+        })
+        .then((response) => response.json())
+        .then((forecastData) => {
+          setForecast(forecastData.properties.periods);
+        })
+        .catch((error) => {
+          console.error('Error fetching weather data:', error);
+        });
+    };
 
-    const recordingStatus = await audioRecordingRef?.current?.getStatusAsync();
-    if (!recordingStatus?.canRecord) {
-      const recordingOptions = {
-        ...Audio.RecordingOptionsPresets.HIGH_QUALITY,
-        android: {
-          extension: ".amr",
-          outputFormat: Audio.AndroidOutputFormat.AMR_WB,
-          audioEncoder: Audio.AndroidAudioEncoder.AMR_WB,
-          sampleRate: 16000,
-          numberOfChannels: 1,
-          bitRate: 128000,
-        },
-        ios: {
-          extension: ".wav",
-          audioQuality: Audio.IOSAudioQuality.HIGH,
-          sampleRate: 44100,
-          numberOfChannels: 1,
-          bitRate: 128000,
-          linearPCMBitDepth: 16,
-          linearPCMIsBigEndian: false,
-        },
-      };
-      await audioRecordingRef.current?.prepareToRecordAsync(recordingOptions).then(() => console.log("Recording prepared"))
-      .catch((e) => console.error("Error preparing recording)", e));
-    }
+    fetchWeatherData();
+  }, []);
 
-
-    await audioRecordingRef.current.startAsync();
-  } else {
-    console.error("Permission to record audio is required!");
-    return; 
-  }
-} catch (e) {
-  console.error("Error recording speech: ", e);
-  return e;
 }
-};
+export default App;
