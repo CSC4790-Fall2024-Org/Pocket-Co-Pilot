@@ -3,23 +3,25 @@ import { MutableRefObject } from "react";
 import * as FileSystem from "expo-file-system";
 import { Platform } from "react-native";
 import * as Device from "expo-device";
-import e from "express";
 
 export const transcribeSpeech = async (
   audioRecordingRef: MutableRefObject<Audio.Recording>
 ) => {
+  try {
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
       playsInSilentModeIOS: false,
     });
-    
-    //check if recording is prepared
+
+    // Check if recording is prepared
     const isPrepared = audioRecordingRef?.current?._canRecord;
-    //if prepared
+
+    // If prepared
     if (isPrepared) {
-        //stops recording and unallocates recording from memory
+      // Stop recording and unload from memory
       await audioRecordingRef?.current?.stopAndUnloadAsync();
-        //get the URI to read the data
+      
+      // Get the URI to read the data
       const recordingUri = audioRecordingRef?.current?.getURI() || "";
       const base64Uri = await FileSystem.readAsStringAsync(recordingUri, {
         encoding: FileSystem.EncodingType.Base64,
@@ -31,43 +33,62 @@ export const transcribeSpeech = async (
           sampleRateHertz: Platform.OS === "ios" ? 44100 : 16000,
           languageCode: "en-US",
         };
-        //need to configure so that app can access server
-        const rootOrigin = 
-        Platform.OS === 'android' 
-        ? "10.0.2.2" : Device.isDevice 
-        ? process.env.LOCAL_DEV_IP || "localhost" 
-        : "localhost";
-        const serverUrl = `http://${rootOrigin}:4000`;
 
-        const serverResponse = await fetch(`${serverUrl}/speech-to-text`, {
-          method: "POST", 
-          headers: {"Content-Type": "application/json"}, 
-          body: JSON.stringify({audioUrl: base64Uri, config: audioConfig}),
-        })
-        .then((res) => res.json())
-        .catch((e) => console.error(e));
+        // Need to configure so that app can access the server
+        const rootOrigin =
+          Platform.OS === "android"
+            ? Device.isDevice
+              ? process.env.EXPO_PUBLIC_LOCAL_DEV_IP
+              : "10.0.2.2"
+            : Device.isDevice
+            ? process.env.EXPO_PUBLIC_LOCAL_DEV_IP || "localhost"
+            : "localhost";
+
+        console.log("Root Origin:", rootOrigin);
+
+        const serverUrl = `http://${rootOrigin}:4000`;
+        console.log("Server URL:", serverUrl);
+
+        console.log("Sending request to server...");
+        const response = await fetch(`${serverUrl}/Pocket-Co-Pilot`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({ audioUrl: base64Uri, config: audioConfig }),
+        });
+
+        console.log("Response status:", response.status);
+        console.log("Response:", JSON.stringify(response));
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(
+            `HTTP error! status: ${response.status}, body: ${errorText}`
+          );
+        }
+
+        const serverResponse = await response.json();
+        console.log("Server Response:", JSON.stringify(serverResponse));
+
         const results = serverResponse?.results || [];
-        console.log(results);
-        if (results){
-          const transcript = results?.alternatives?.[0].transcript;
-          if (!transcript){
-            console.error("No transcript found");
-            return undefined;
-          }
-          return transcript;
+        console.log("Results:", JSON.stringify(results));
+
+        if (results.length === 0) {
+          throw new Error("No results found in server response");
         }
-        else{
-          console.error("No transcript found");
-          return undefined;
+
+        const transcript = results[0]?.alternatives?.[0]?.transcript;
+        if (!transcript) {
+          throw new Error("No transcript found in results");
         }
+
+        return transcript;
       }
-        else{
-          console.error("Something went wrong while unloading the recording");
-          return undefined;
-        }
     }
-    else{
-      console.error("Recording must be prepared prior to unloading");
-      return undefined;
-    }
+  } catch (error) {
+    console.error("Error in transcribeSpeech:", error);
+    return undefined;
+  }
 };

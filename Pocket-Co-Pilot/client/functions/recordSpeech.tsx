@@ -37,6 +37,7 @@ export const recordSpeech = async (audioRecordingRef: MutableRefObject<Audio.Rec
           bitRate: 128000,
           linearPCMBitDepth: 16,
           linearPCMIsBigEndian: false,
+          linearPCMIsFloat: false,
         },
       };
       await audioRecordingRef.current?.prepareToRecordAsync(recordingOptions).then(() => console.log("Recording prepared"))
