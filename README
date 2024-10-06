@@ -30,3 +30,4 @@ API Key and Local IP:
 To run app:
 1. In Pocket-Co-Pilot\Pocket-Co-Pilot run: npm start
 2. In Pocket-Co-Pilot\Pocket-Co-Pilot\client run: npx expo start
+3. press a to pull up on the android emulator
