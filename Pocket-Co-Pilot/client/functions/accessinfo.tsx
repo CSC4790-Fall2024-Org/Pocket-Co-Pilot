@@ -1,5 +1,4 @@
 import {useState, useEffect} from 'react';
-//import { View, Text, ActivityIndicator, FlatList } from 'react-native';
 
 // Make a new component 
 const infoAPI = ({})=>{
@@ -20,7 +19,7 @@ const infoAPI = ({})=>{
 
         const jsonData = await response.json();
 
-        // Update state with our data (which is JSON)
+        // Update state
         setData(jsonData);
         
       } catch (error) {
