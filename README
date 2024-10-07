@@ -13,7 +13,7 @@ https://developer.android.com/studio
 2. Navigate to the Device Manager tab and create a Pixel Pro XL with the basic configuration
 To run the expo app:
 1. run the commands in the Path: "Pocket-Co-Pilot\Pocket-Co-Pilot"
-    npm i express dotenv 
+    npm install
     npm i --save-dev @types/express
     npm i -D ts-node typescript
 2. run the commands in the Path: "Pocket-Co-Pilot\Pocket-Co-Pilot\client"
@@ -32,3 +32,4 @@ API Key and Local IP:
 To run app:
 1. In Pocket-Co-Pilot\Pocket-Co-Pilot run: npm start
 2. In Pocket-Co-Pilot\Pocket-Co-Pilot\client run: npx expo start
+3. Press a to open the app in the emulator
