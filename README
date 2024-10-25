@@ -4,14 +4,16 @@ Difficulty alternating between these tasks often leads to inaccurate decisions a
 Pocket Co-pilot is a mobile app that assists single pilots by providing hands-free aviation information. 
 The user can speak to the application to receive pertinent flight information, aiding flight safety and boosting in-flight awareness. 
 The application will be able to provide information upon request, such as weather, runway information, and the closest airport to aid in diversion.
-
+Must install:
+Node: https://nodejs.org/en
+Run from the main branch
 To run on a platform must:
 1. First install an android emulator
 https://developer.android.com/studio
 2. Navigate to the Device Manager tab and create a Pixel Pro XL with the basic configuration
 To run the expo app:
 1. run the commands in the Path: "Pocket-Co-Pilot\Pocket-Co-Pilot"
-    npm i express dotenv 
+    npm install
     npm i --save-dev @types/express
     npm i -D ts-node typescript
 2. run the commands in the Path: "Pocket-Co-Pilot\Pocket-Co-Pilot\client"
@@ -30,4 +32,3 @@ API Key and Local IP:
 To run app:
 1. In Pocket-Co-Pilot\Pocket-Co-Pilot run: npm start
 2. In Pocket-Co-Pilot\Pocket-Co-Pilot\client run: npx expo start
-3. press a to pull up on the android emulator
