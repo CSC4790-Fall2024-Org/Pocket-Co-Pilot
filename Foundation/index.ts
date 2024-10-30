@@ -4,6 +4,7 @@ import { speechToText } from "./functions/speechToText";
 import "dotenv/config";
 
 const port = process.env.PORT || 4000;
+const server = '0.0.0.0';
 const app = express();
 
 // Middleware
@@ -26,7 +27,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // Start server
-app.listen(port, () => {
+app.listen(4000, '0.0.0.0', () => {
   console.log(`Server is running on port ${port}`);
 });
 

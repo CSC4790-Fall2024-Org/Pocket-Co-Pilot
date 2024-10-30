@@ -60,11 +60,9 @@ export const transcribeSpeechHard = async () => {
 
       console.log("Root Origin:", rootOrigin);
 
-      const serverUrl = `http://${rootOrigin}:4000`;
-      console.log("Server URL:", serverUrl);
 
       console.log("Sending request to server...");
-      const response = await fetch(`${serverUrl}/Pocket-Co-Pilot`, {
+      const response = await fetch(`${rootOrigin}/Pocket-Co-Pilot`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

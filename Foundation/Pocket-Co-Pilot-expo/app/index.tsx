@@ -23,16 +23,16 @@ export default function HomeScreen() {
   const startRecording = async () => {
     setIsRecording(true);
     //record speech
-    // await recordSpeech(audioRecordingRef);
-    loadAudioFile();
+    await recordSpeech(audioRecordingRef);
+    //loadAudioFile();
   };
   const stopRecording = async () => {
     setIsRecording(false);
     setIsTranscribing(true);
     //transcribe speech
     try{
-      // const speechTranscipt = await transcribeSpeech(audioRecordingRef);
-      const speechTranscipt = await transcribeSpeechHard();
+      const speechTranscipt = await transcribeSpeech(audioRecordingRef);
+      //const speechTranscipt = await transcribeSpeechHard();
       setTranscribedSpeech(speechTranscipt || "");
     }
     catch(e){
