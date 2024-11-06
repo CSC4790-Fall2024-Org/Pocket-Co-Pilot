@@ -11,10 +11,12 @@ from bs4 import BeautifulSoup
 
 input  = 'length Kilo Uniform Kilo Tango'
 input_list = input.split()
-print (input_list)
+airport = ''.join(word[0] for word in input_list[-4:])
+print (airport)
+
+
 
 # Get Specific Query and Airport
-airport = "KUKT" 
 query = "AWOS"
 response = ""
 
