@@ -7,27 +7,20 @@ The application will be able to provide information upon request, such as weathe
 Must install:
 Node: https://nodejs.org/en
 Run from the main branch
-To run on a platform must:
-1. First install an android emulator
-https://developer.android.com/studio
-2. Navigate to the Device Manager tab and create a Pixel Pro XL with the basic configuration
 To run the expo app:
-1. run the commands in the Path: "Pocket-Co-Pilot\Pocket-Co-Pilot"
+1. run the commands in the Path: "Pocket-Co-Pilot\Foundation"
     npm install
-    npm i --save-dev @types/express
-    npm i -D ts-node typescript
 2. run the commands in the Path: "Pocket-Co-Pilot\Pocket-Co-Pilot\client"
-    npx expo install expo-av
-    npx expo install expo-device 
-    npm install cors @types/cors
+    npm install
 
 API Key and Local IP:
 1. Navigate to: https://console.cloud.google.com/marketplace/product/google/speech.googleapis.com?q=search&referrer=search&hl=en&project=pocket-co-pilot-speech-to-text
 2. set up API key
-3. Create .env file in Path: "Pocket-Co-Pilot\Pocket-Co-Pilot" and place key inside designated as
+3. Create .env file in Path: "Pocket-Co-Pilot\Foundation" and place key inside designated as
     GOOGLE_SPEECH_TO_TEXT_API_KEY=
-4. In file path: "Pocket-Co-Pilot\Pocket-Co-Pilot\client" create a .env file
-5. Add EXPO_PUBLIC_LOCAL_DEV_IP=your IP address
+4. Navigate to ngrok and create a domain
+5. In file path: "Pocket-Co-Pilot\Foundation\Pocket-Co-Pilot-expo" create a .env file
+6. Place the Environment variable: EXPO_PUBLIC_LOCAL_DEV_IP= https://(ngrok domain name)
 
 To run app:
 1. In Pocket-Co-Pilot\Pocket-Co-Pilot run: npm start

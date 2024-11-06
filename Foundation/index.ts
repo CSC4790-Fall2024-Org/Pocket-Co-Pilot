@@ -22,6 +22,18 @@ app.post("/Pocket-Co-Pilot", (req: Request, res: Response) => {
   }
 });
 
+// app.post("/python-function", async (req: Request, res: Response) => {
+//   console.log("Received request to /python-function");
+//   try {
+//     const { text } = req.body;
+//     const response = await callPythonFunction(text);
+//     res.status(200).json(response);
+//   } catch (error) {
+//     console.error("Error in /python-function route:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
+
 app.get("/", (req: Request, res: Response) => {
   res.send("App is running");
 });

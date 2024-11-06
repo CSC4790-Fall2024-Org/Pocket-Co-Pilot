@@ -81,7 +81,7 @@ export const transcribeSpeech = async (
         if (!transcript) {
           throw new Error("No transcript found in results");
         }
-
+        
         return transcript;
       }
     }
