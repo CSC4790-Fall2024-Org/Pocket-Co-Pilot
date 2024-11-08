@@ -14,10 +14,20 @@ input_list = input.split()
 airport = ''.join(word[0] for word in input_list[-4:])
 print (airport)
 
-
+if 'elevation' in input_list:
+    query = 'elevation'
+elif 'length' in input_list:
+    query = 'length'
+elif 'weather' in input_list:
+    query = 'weather'
+elif 'UNICOM' in input_list:
+    query = 'UNICOM'
+elif 'AWOS' in input_list:
+    query = 'AWOS'
+else:
+    query = ''
 
 # Get Specific Query and Airport
-query = "AWOS"
 response = ""
 
 # Build URL
@@ -33,7 +43,6 @@ else:
 # Parse URL
 page = requests.get(URL)
 soup = BeautifulSoup(page.content, 'html.parser')
-
 
 # Get Informtion From Location
 match query:
