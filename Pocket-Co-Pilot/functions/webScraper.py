@@ -2,33 +2,29 @@
 import requests
 from bs4 import BeautifulSoup
 
-# Takes in keyword and location strings
-
-# Get IP and URL
-# https://www.airnav.com/airport/kukt
-# https://acukwik.com/Airport-Info/KUKT 
-
-
+# Determine airport from phonetic alphabet
 input  = 'length Kilo Uniform Kilo Tango'
 input_list = input.split()
 airport = ''.join(word[0] for word in input_list[-4:])
-print (airport)
 
+# Find keyword
 if 'elevation' in input_list:
     query = 'elevation'
+
 elif 'length' in input_list:
     query = 'length'
+
 elif 'weather' in input_list:
     query = 'weather'
+
 elif 'UNICOM' in input_list:
     query = 'UNICOM'
+
 elif 'AWOS' in input_list:
     query = 'AWOS'
+
 else:
     query = ''
-
-# Get Specific Query and Airport
-response = ""
 
 # Build URL
 if (query == 'weather'):
