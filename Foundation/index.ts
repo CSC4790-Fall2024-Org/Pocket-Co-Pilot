@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { speechToText } from "./functions/speechToText";
-import { callPythonFunction } from "./functions/";
+import { airportInfoQuery } from "./functions/airportInfo";
 import "dotenv/config";
 
 const port = process.env.PORT || 4000;
@@ -27,7 +27,7 @@ app.post("/airportInfo", async (req: Request, res: Response) => {
   console.log("Received request to /airportInfo");
   try {
     const { text } = req.body;
-    const response = await callPythonFunction(text);
+    const response = await airportInfoQuery(text);
     res.status(200).json(response);
   } catch (error) {
     console.error("Error in /airportInfo route:", error);
