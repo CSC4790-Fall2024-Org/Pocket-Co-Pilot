@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { speechToText } from "./functions/speechToText";
-import { callPythonFunction } from "./functions/webScraper";
+import { callPythonFunction } from "./functions/";
 import "dotenv/config";
 
 const port = process.env.PORT || 4000;
