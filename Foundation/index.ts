@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { speechToText } from "./functions/speechToText";
+import { callPythonFunction } from "./functions/webScraper";
 import "dotenv/config";
 
 const port = process.env.PORT || 4000;
@@ -22,17 +23,17 @@ app.post("/Pocket-Co-Pilot", (req: Request, res: Response) => {
   }
 });
 
-// app.post("/python-function", async (req: Request, res: Response) => {
-//   console.log("Received request to /python-function");
-//   try {
-//     const { text } = req.body;
-//     const response = await callPythonFunction(text);
-//     res.status(200).json(response);
-//   } catch (error) {
-//     console.error("Error in /python-function route:", error);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// });
+app.post("/airportInfo", async (req: Request, res: Response) => {
+  console.log("Received request to /airportInfo");
+  try {
+    const { text } = req.body;
+    const response = await callPythonFunction(text);
+    res.status(200).json(response);
+  } catch (error) {
+    console.error("Error in /airportInfo route:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 app.get("/", (req: Request, res: Response) => {
   res.send("App is running");
