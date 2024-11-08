@@ -14,7 +14,7 @@ export default function HomeScreen() {
   const [transcribedSpeech, setTranscribedSpeech] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
-  const [pythonResponse, setPythonResponse] = useState("");
+  const [airportInfo, setPythonResponse] = useState("");
   const audioRecordingRef = useRef(new Audio.Recording());
 
   const startRecording = async () => {
@@ -36,15 +36,7 @@ export default function HomeScreen() {
     }
   };
 
-  // const callPythonFunction = async (text: string) => {
-  //   try {
-  //     const response = await axios.post('/api/python-function', { text });
-  //     setPythonResponse(response.data);
-  //     await speakText(response.data);
-  //   } catch (error) {
-  //     console.error('Error calling Python function:', error);
-  //   }
-  // };
+  
 
 
   const speakText = async (text : string) => {
@@ -156,3 +148,14 @@ const styles = StyleSheet.create({
     width: "100%",
   }
 });
+
+
+// const callPythonFunction = async (text: string) => {
+  //   try {
+  //     const response = await axios.post('/api/python-function', { text });
+  //     setPythonResponse(response.data);
+  //     await speakText(response.data);
+  //   } catch (error) {
+  //     console.error('Error calling Python function:', error);
+  //   }
+  // };
