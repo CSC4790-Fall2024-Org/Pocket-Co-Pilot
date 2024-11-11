@@ -62,7 +62,7 @@ export async function airportInfoQuery(input: string) {
         return { result: responseValue };
       }
       case 'UNICOM': {
-        // Get CTAF/UNICOM
+        // Get CTAF/UNICOM - doesnt work
         const responseLabel = $('div.fl.w35p.bold').filter((_, el) =>
           $(el).text().trim().includes("Frequency")
         );
@@ -70,7 +70,7 @@ export async function airportInfoQuery(input: string) {
         return { result: `The CTAF/UNICOM of ${airport} is: ${responseValue}` };
       }
       case 'AWOS': {
-        // Get AWOS
+        // Get AWOS - doesnt work
         const responseValue = $('div.w17p.fl.p3px').text().trim();
         return { result: `The AWOS of ${airport} is: ${responseValue}` };
       }

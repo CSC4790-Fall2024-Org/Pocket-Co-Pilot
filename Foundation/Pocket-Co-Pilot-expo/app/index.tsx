@@ -8,13 +8,15 @@ import { recordSpeech } from '@/functions/recordSpeech';
 import { transcribeSpeech } from '@/functions/transcribeSpeech';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as Speech from 'expo-speech';
+import { Platform } from "react-native";
+import * as Device from "expo-device";
 // import axios from 'axios';
 
 export default function HomeScreen() {
   const [transcribedSpeech, setTranscribedSpeech] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
-  const [airportInfo, setPythonResponse] = useState("");
+  const [airportInfo, setAirportInfo] = useState("");
   const audioRecordingRef = useRef(new Audio.Recording());
 
   const startRecording = async () => {
@@ -29,6 +31,7 @@ export default function HomeScreen() {
       const speechTranscript = await transcribeSpeech(audioRecordingRef);
       setTranscribedSpeech(speechTranscript || "");
       await speakText(speechTranscript || "");
+      await sendTranscribedSpeechToServer(speechTranscript || "");
     } catch (e) {
       console.error(e);
     } finally {
@@ -36,7 +39,32 @@ export default function HomeScreen() {
     }
   };
 
+  const sendTranscribedSpeechToServer = async (transcribedSpeech: string) => {
+    try {
+      const rootOrigin =
+          Platform.OS === "android"
+            ? Device.isDevice
+              ? process.env.EXPO_PUBLIC_LOCAL_DEV_IP
+              : "10.0.2.2"
+            : Device.isDevice
+            ? process.env.EXPO_PUBLIC_LOCAL_DEV_IP || "localhost"
+            : "localhost";
+      const response = await fetch(`${rootOrigin}/airportInfo`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: transcribedSpeech }),
+      });
   
+      const data = await response.json();
+      console.log(data);
+      setAirportInfo(data.result);
+      await speakText(data.result);
+    } catch (error) {
+      console.error('Error sending transcribed speech to server:', error);
+    }
+  };
 
 
   const speakText = async (text : string) => {
