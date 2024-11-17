@@ -3,7 +3,7 @@ import * as cheerio from 'cheerio';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 import OpenAI from "openai";
-const openai = new OpenAI({apiKey: `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`});
+const openai = new OpenAI({apiKey: process.env.OPEN_AI_API_KEY});
 
 // const genAI = new GoogleGenerativeAI(`OPEN_AI_API_KEY`);
 // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
