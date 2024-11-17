@@ -1,9 +1,12 @@
 import axios from 'axios';
+import 'dotenv/config';
 import * as cheerio from 'cheerio';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 import OpenAI from "openai";
-const openai = new OpenAI({apiKey: process.env.OPEN_AI_API_KEY});
+const openaiKey = process.env.OPEN_AI_API_KEY;
+console.log(typeof openaiKey);
+const openai = new OpenAI({ apiKey: openaiKey });
 
 // const genAI = new GoogleGenerativeAI(`OPEN_AI_API_KEY`);
 // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });

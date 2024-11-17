@@ -3,7 +3,7 @@ export const speechToText = async (req: Request, res: Response) => {
     const data = req.body;
     const audioUrl = data?.audioUrl;
     const audioConfig = data?.config;
-
+    if (!data) return res.status(422).send("No data was provided.");
     if (!audioUrl) return res.status(422).send("No audio URL was provided.");
     if (!audioConfig) return res.status(422).send("No audio config was provided.");
 
@@ -23,6 +23,9 @@ export const speechToText = async (req: Request, res: Response) => {
             },
         }).then((response) => response.json());
         console.log({ results: speechResults.results?.[0]?.alternatives?.[0] });
+        if (speechResults.results?.[0]?.alternatives?.[0] == undefined) {
+            return res.status(404).send("No results found.");
+        }
         return res.send(speechResults);
     } catch (e){ 
         console.error("Error converting speech to text: ", e);

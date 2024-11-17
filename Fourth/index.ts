@@ -34,6 +34,10 @@ app.post("/airportInfo", (req: AirportInfoRequest, res: Response): void => {
   console.log("Received request to /airport-info");
   try {
     const { input } = req.body;
+    if (input === undefined) {
+      res.status(400).json({ error: "Input is required" });
+      return;
+    }
     
     if (!input) {
       res.status(400).json({ error: "Input is required" });
