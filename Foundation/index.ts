@@ -4,6 +4,7 @@ import { speechToText } from "./functions/speechToText";
 import { airportInfoQuery } from "./functions/airportInfo";
 import "dotenv/config";
 
+
 const port = process.env.PORT || 4000;
 const server = '0.0.0.0';
 const app = express();
@@ -11,6 +12,7 @@ const app = express();
 // Middleware
 app.use(cors());  // Enable CORS for all routes
 app.use(express.json({ limit: "50mb" }));
+
 
 // Routes
 app.post("/Pocket-Co-Pilot", (req: Request, res: Response) => {
@@ -34,6 +36,7 @@ app.post("/airportInfo", async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
 
 app.get("/", (req: Request, res: Response) => {
   res.send("App is running");

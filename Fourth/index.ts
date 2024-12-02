@@ -33,9 +33,10 @@ app.post("/Pocket-Co-Pilot", (req: Request, res: Response) => {
 app.post("/airportInfo", (req: AirportInfoRequest, res: Response): void => {
   console.log("Received request to /airport-info");
   try {
+    console.log("Request body:", req.body);
     const { input } = req.body;
-    if (input === undefined) {
-      res.status(400).json({ error: "Input is required" });
+    if (input === '') {
+      res.json("Please Try again");
       return;
     }
     

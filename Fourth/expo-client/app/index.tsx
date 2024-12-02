@@ -10,6 +10,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as Speech from 'expo-speech';
 import { Platform } from "react-native";
 import * as Device from "expo-device";
+import HelpModal from './helpModal';
 // import axios from 'axios';
 
 export default function HomeScreen() {
@@ -18,6 +19,11 @@ export default function HomeScreen() {
   const [isTranscribing, setIsTranscribing] = useState(false);
   const [airportInfo, setAirportInfo] = useState("");
   const audioRecordingRef = useRef(new Audio.Recording());
+  const [isHelpModalVisible, setIsHelpModalVisible] = useState(false);
+
+  const toggleHelpModal = () => {
+    setIsHelpModalVisible(!isHelpModalVisible);
+  };
 
   const startRecording = async () => {
     setIsRecording(true);
@@ -89,6 +95,12 @@ export default function HomeScreen() {
             <View style={styles.headerContainer}>
               <FontAwesome name="plane" size={30} color="#7bb5e3" style={styles.headerIcon} />
               <Text style={styles.title}>Pilot Co-Pilot</Text>
+              <TouchableOpacity 
+                style={styles.helpButton} 
+                onPress={toggleHelpModal}
+              >
+                <FontAwesome name="question-circle" size={24} color="#7bb5e3" />
+              </TouchableOpacity>
             </View>
             
             {/* Main Panel */}
@@ -126,7 +138,7 @@ export default function HomeScreen() {
                   {isRecording ? (
                     <ActivityIndicator size="small" color="#ffffff" />
                   ) : (
-                    <FontAwesome name="microphone" size={30} color="#ffffff" />
+                    <FontAwesome name="microphone" size={70} color="#ffffff" />
                   )}
                 </View>
               </TouchableOpacity>
@@ -134,6 +146,10 @@ export default function HomeScreen() {
           </View>
         </ScrollView>
       </SafeAreaView>
+      <HelpModal 
+        isVisible={isHelpModalVisible} 
+        onClose={toggleHelpModal} 
+      />
     </GestureHandlerRootView>
   );
 }
@@ -153,8 +169,12 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between', 
     marginBottom: 30,
+    paddingHorizontal: 10, 
+  },
+  helpButton: {
+    padding: 10,
   },
   headerIcon: {
     marginRight: 10,
@@ -213,25 +233,25 @@ const styles = StyleSheet.create({
   microphoneButton: {
     alignSelf: 'center',
     backgroundColor: '#2c5282',
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: 150,  // Increased from 70
+    height: 150, // Increased from 70
+    borderRadius: 75, // Half of width/height
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 30, // Increased margin to give more space
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 8,
   },
   microphoneButtonActive: {
     backgroundColor: '#e53e3e',
   },
   microphoneInner: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 130, // Proportionally larger inner circle
+    height: 130,
+    borderRadius: 65,
     backgroundColor: 'rgba(123, 181, 227, 0.2)',
     justifyContent: 'center',
     alignItems: 'center',

@@ -13,6 +13,7 @@ const openai = new OpenAI({ apiKey: openaiKey });
 
 export async function airportInfoQuery(input: string) {
   // Determine airport from phonetic alphabet
+  console.log('Input in airport info: ' + input + '\n');
   const inputCapitalized = input.toUpperCase();
   const inputList = inputCapitalized.split(' ');
   const airport = inputList.slice(-4).map(word => word[0]).join('').toUpperCase();
